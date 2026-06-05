@@ -13,6 +13,9 @@ import expenseRoutes from './routes/expenses.js';
 
 const app = express();
 
+// Trust Vercel's reverse proxy for express-rate-limit
+app.set('trust proxy', 1);
+
 // Security Middleware
 app.use(helmet());
 app.use(mongoSanitize());
