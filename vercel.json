@@ -27,6 +27,10 @@
       "dest": "/client/favicon.svg"
     },
     {
+      "src": "/robots.txt",
+      "dest": "/client/robots.txt"
+    },
+    {
       "src": "/(.*)",
       "dest": "/client/index.html"
     }
