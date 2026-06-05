@@ -30,13 +30,22 @@ app.use('/api/', apiLimiter);
 app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
+
+// Connect DB before processing any requests (Serverless requirement)
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    res.status(500).json({ message: 'Database connection failed' });
+  }
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api/expenses', expenseRoutes);
 
 app.use(errorHandler);
 
-// Connect DB when the serverless function spins up
-connectDB();
 
 if (process.env.NODE_ENV !== 'production') {
   app.listen(env.PORT, () => {
