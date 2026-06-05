@@ -119,12 +119,14 @@ export default function ExpensesPage() {
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search expenses..."
             className="search-input"
+            aria-label="Search expenses"
           />
         </div>
         <select
           value={category}
           onChange={handleCategoryChange}
           className="category-select"
+          aria-label="Filter by category"
         >
           <option value="">All Categories</option>
           {categories.map((cat) => (

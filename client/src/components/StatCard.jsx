@@ -12,7 +12,7 @@ export default function StatCard({ title, value, icon }) {
     <div className="card stat-card">
       <div className="stat-header">
         <span className="stat-icon">{icon}</span>
-        <h3 className="stat-title">{title}</h3>
+        <h2 className="stat-title">{title}</h2>
       </div>
       <p className={`stat-value ${highlight ? 'value-highlight' : ''}`}>
         {typeof value === 'number' && (title.includes('Balance') || title.includes('Spending') || title.includes('Expenses'))

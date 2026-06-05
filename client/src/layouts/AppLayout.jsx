@@ -79,7 +79,7 @@ export default function AppLayout() {
               <p className="user-name">{user?.name}</p>
               <p className="user-email">{user?.email}</p>
             </div>
-            <button onClick={logout} className="logout-btn" title="Logout">
+            <button onClick={logout} className="logout-btn" title="Logout" aria-label="Logout">
               <LogOut size={20} />
             </button>
           </div>
@@ -89,7 +89,7 @@ export default function AppLayout() {
       {/* Main content */}
       <div className="main-content">
         <header className="header">
-          <button onClick={() => setSidebarOpen(true)} className="menu-toggle">
+          <button onClick={() => setSidebarOpen(true)} className="menu-toggle" aria-label="Open menu">
             <Menu size={24} />
           </button>
           <div className="header-spacer" />
@@ -97,6 +97,7 @@ export default function AppLayout() {
             onClick={toggleTheme}
             className="btn-icon"
             title="Toggle theme"
+            aria-label="Toggle theme"
           >
             {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
           </button>

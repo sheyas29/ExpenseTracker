@@ -17,7 +17,7 @@ export default function ToastContainer() {
             )}
             <span>{toast.message}</span>
           </div>
-          <button onClick={() => removeToast(toast.id)} className="toast-close">
+          <button onClick={() => removeToast(toast.id)} className="toast-close" aria-label="Close notification">
             <X size={16} />
           </button>
         </div>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://expense-tracker-seven-lac-89.vercel.app/sitemap.xml

@@ -57,6 +57,7 @@ export default function DashboardPage() {
           value={selectedMonth}
           onChange={(e) => setSelectedMonth(e.target.value)}
           className="input-field"
+          aria-label="Select month"
           style={{ width: 'auto', marginBottom: 0, padding: '0.25rem 0.5rem' }}
         />
       </div>
