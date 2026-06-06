@@ -1,12 +1,12 @@
-# ₹ ExpenseTracker: The Impeccable Ledger
+# ₹ ExpenseTracker
 
-Welcome to the **ExpenseTracker**! This is a lightning-fast, highly-polished web application built to help you track your money with zero friction.
+Welcome to the **ExpenseTracker**! This is a lightning-fast web application built to help you track your money with zero friction.
 
 ---
 
-## 📖 What is this app?
+## What is this app?
 
-ExpenseTracker is a comprehensive, full-stack financial ledger designed to give you complete visibility into your spending habits. Rather than relying on bulky spreadsheets or bloated mobile apps, this tool provides a sleek, keyboard-driven interface to log transactions instantly.
+ExpenseTracker is a comprehensive, full-stack designed to give you complete visibility into your spending habits. Rather than relying on bulky spreadsheets or bloated mobile apps, this tool provides a sleek, keyboard-driven interface to log transactions instantly.
 
 ### How to use ExpenseTracker:
 
@@ -18,11 +18,11 @@ ExpenseTracker is a comprehensive, full-stack financial ledger designed to give 
 
 ---
 
-## ⚡ Uncompromising Performance Metrics
+## Uncompromising Performance Metrics
 
-This project was engineered from the ground up with a singular focus on **absolute speed and microscopic bundle sizes**. We stripped away every unnecessary dependency to create an application that is shockingly lightweight.
+This project was engineered from the ground up with a singular focus on **absolute speed and microscopic bundle sizes**. Stripped away every unnecessary dependency to create an application that is shockingly lightweight.
 
-- **Zero-Bloat CSS**: We proudly use `0 KB` of external CSS frameworks (No Tailwind, No Material UI, No Bootstrap). The entire design system is built on pure CSS Custom Properties, resulting in near-instant paint times.
+- **Zero-Bloat CSS**: Used `0 KB` of external CSS frameworks (No Tailwind, No Material UI, No Bootstrap). The entire design system is built on pure CSS Custom Properties, resulting in near-instant paint times.
 - **Microscopic Footprint**: By relying strictly on native web technologies and highly targeted libraries (like Lucide for SVGs instead of FontAwesome), the application's payload is drastically smaller than a typical React SPA.
 - **Lighthouse Capabilities**: Built to achieve a flawless **100/100** score across Performance, Accessibility, Best Practices, and SEO.
 - **Optimized Re-renders**: Minimized inline styles and utilized strict CSS classes for rendering efficiency, ensuring the UI remains perfectly fluid even on lower-end devices.
@@ -30,7 +30,7 @@ This project was engineered from the ground up with a singular focus on **absolu
 
 ---
 
-## 🛡️ Robust Validation & Data Integrity
+## Robust Validation & Data Integrity
 
 A core component of the application's architecture is a strict, two-tier validation system ensuring data integrity and security from the UI down to the database.
 
@@ -54,7 +54,7 @@ Never trust the client. The backend acts as the ultimate source of truth.
 
 ---
 
-## 🧠 Tech Stack: The "Why" behind the "What"
+## Tech Stack: The "Why" behind the "What"
 
 Every piece of technology in this stack had to earn its place. If a lighter, faster, or more natively-controlled alternative existed, we took it.
 
@@ -72,13 +72,13 @@ Every piece of technology in this stack had to earn its place. If a lighter, fas
 ### Backend
 
 - **Node.js + Express + MongoDB (Mongoose)**
-  - _Why not PostgreSQL + Prisma?_ For a simple financial ledger focused on raw read/write speed, the BSON document model maps perfectly to JSON on the frontend. The MERN stack allows a seamless, unified Javascript mental model from database to DOM.
+  - _Why not PostgreSQL + Prisma?_ For a simple financial ledger focused on raw read/write speed, the BSON document model maps perfectly to JSON on the frontend. The MERN stack allows a seamless, unified Javascript model from database to DOM.
 
 ---
 
-## 📂 Project Structure & File Directory
+## Project Structure & File Directory
 
-To help reviewers navigate the project, here is the visual directory structure:
+To help navigate the project, here is the visual directory structure:
 
 ```
 Expense Tracker/
@@ -151,7 +151,6 @@ Expense Tracker/
 │   ├── package.json
 │   └── seed.js
 ├── vercel.json
-├── PRODUCT.md
 └── README.md
 ```
 
@@ -162,7 +161,6 @@ Here is a simple walkthrough of what every file does in plain terms:
 ### Root Configurations
 
 - [vercel.json](file:///C:/Users/kshre/OneDrive/Desktop/Expense%20Tracker/vercel.json): The hosting deployment file. It maps web traffic to the frontend and backend correctly on Vercel.
-- [PRODUCT.md](file:///C:/Users/kshre/OneDrive/Desktop/Expense%20Tracker/PRODUCT.md): The app blueprint, detailing target audiences, dark-mode color principles, and keyboard navigation settings.
 
 ### Client (React.js Frontend)
 
@@ -228,7 +226,7 @@ Here is a simple walkthrough of what every file does in plain terms:
 
 ---
 
-## 🚀 Getting Started (Local Development)
+## Getting Started (Local Development)
 
 ### 1. Database (MongoDB Atlas)
 
