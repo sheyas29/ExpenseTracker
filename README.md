@@ -78,13 +78,94 @@ Every piece of technology in this stack had to earn its place. If a lighter, fas
 
 ## 📂 Project Structure & File Directory
 
-To help reviewers understand the codebase instantly, here is a simple walkthrough of what every file does in plain terms:
+To help reviewers navigate the project, here is the visual directory structure:
+
+```
+Expense Tracker/
+├── client/
+│   ├── public/
+│   │   ├── favicon.svg
+│   │   ├── icons.svg
+│   │   └── robots.txt
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── ExpenseForm.jsx
+│   │   │   ├── ExpenseTable.jsx
+│   │   │   ├── Modal.jsx
+│   │   │   ├── MonthlyChart.jsx
+│   │   │   ├── ProtectedRoute.jsx
+│   │   │   ├── StatCard.jsx
+│   │   │   └── ToastContainer.jsx
+│   │   ├── context/
+│   │   │   ├── AuthContext.jsx
+│   │   │   ├── ThemeContext.jsx
+│   │   │   └── ToastContext.jsx
+│   │   ├── hooks/
+│   │   │   └── useExpenses.js
+│   │   ├── layouts/
+│   │   │   └── AppLayout.jsx
+│   │   ├── pages/
+│   │   │   ├── DashboardPage.jsx
+│   │   │   ├── ExpensesPage.jsx
+│   │   │   ├── LandingPage.jsx
+│   │   │   ├── LoginPage.jsx
+│   │   │   └── RegisterPage.jsx
+│   │   ├── services/
+│   │   │   └── api.js
+│   │   ├── styles/
+│   │   │   ├── app-layout.css
+│   │   │   ├── auth.css
+│   │   │   ├── components.css
+│   │   │   ├── dashboard.css
+│   │   │   ├── expenses.css
+│   │   │   ├── landing.css
+│   │   │   ├── layout.css
+│   │   │   ├── toast.css
+│   │   │   └── variables.css
+│   │   ├── App.jsx
+│   │   ├── index.css
+│   │   └── main.jsx
+│   ├── index.html
+│   ├── package.json
+│   └── vite.config.js
+├── server/
+│   ├── src/
+│   │   ├── config/
+│   │   │   ├── db.js
+│   │   │   └── env.js
+│   │   ├── controllers/
+│   │   │   ├── authController.js
+│   │   │   └── expenseController.js
+│   │   ├── middleware/
+│   │   │   ├── auth.js
+│   │   │   └── errorHandler.js
+│   │   ├── models/
+│   │   │   ├── Expense.js
+│   │   │   └── User.js
+│   │   ├── routes/
+│   │   │   ├── auth.js
+│   │   │   └── expenses.js
+│   │   ├── utils/
+│   │   │   └── ApiError.js
+│   │   └── server.js
+│   ├── package.json
+│   └── seed.js
+├── vercel.json
+├── PRODUCT.md
+└── README.md
+```
+
+### File Explanations
+
+Here is a simple walkthrough of what every file does in plain terms:
 
 ### Root Configurations
+
 - [vercel.json](file:///C:/Users/kshre/OneDrive/Desktop/Expense%20Tracker/vercel.json): The hosting deployment file. It maps web traffic to the frontend and backend correctly on Vercel.
 - [PRODUCT.md](file:///C:/Users/kshre/OneDrive/Desktop/Expense%20Tracker/PRODUCT.md): The app blueprint, detailing target audiences, dark-mode color principles, and keyboard navigation settings.
 
 ### Client (React.js Frontend)
+
 - **Root Files**:
   - [package.json](file:///C:/Users/kshre/OneDrive/Desktop/Expense%20Tracker/client/package.json): Lists the frontend helper libraries (like chart utilities) and commands to launch the website.
   - [vite.config.js](file:///C:/Users/kshre/OneDrive/Desktop/Expense%20Tracker/client/vite.config.js): The compiler configuration. It packages and optimizes frontend code for instant loading in a web browser.
@@ -125,6 +206,7 @@ To help reviewers understand the codebase instantly, here is a simple walkthroug
   - [src/styles/toast.css](file:///C:/Users/kshre/OneDrive/Desktop/Expense%20Tracker/client/src/styles/toast.css): Notification transition and popup styles.
 
 ### Server (Express.js Backend)
+
 - **Root Files**:
   - [package.json](file:///C:/Users/kshre/OneDrive/Desktop/Expense%20Tracker/server/package.json): Lists the server dependencies (like database drivers and logging tools) and start commands.
   - [seed.js](file:///C:/Users/kshre/OneDrive/Desktop/Expense%20Tracker/server/seed.js): Populates test transactions and user databases so reviewers can test data immediately.
