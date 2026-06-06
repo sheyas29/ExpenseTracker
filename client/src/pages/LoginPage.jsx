@@ -1,4 +1,5 @@
 import { useId, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, IndianRupee } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
@@ -7,24 +8,22 @@ import '../styles/auth.css';
 
 export default function LoginPage() {
   const formId = useId();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onChange' });
+  const [apiError, setApiError] = useState('');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const { login } = useAuth();
   const { addToast } = useToast();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
     setLoading(true);
     try {
-      await login(email, password);
+      await login(data.email, data.password);
       addToast('Logged in successfully', 'success');
       navigate('/dashboard');
     } catch (err) {
-      setError(
+      setApiError(
         err.response?.data?.message || 'Login failed. Please try again.'
       );
     } finally {
@@ -43,9 +42,9 @@ export default function LoginPage() {
           <p className="auth-subtitle">Welcome back</p>
         </div>
 
-        {error && <div className="auth-error">{error}</div>}
+        {apiError && <div className="auth-error">{apiError}</div>}
 
-        <form onSubmit={handleSubmit} className="auth-form">
+        <form onSubmit={handleSubmit(onSubmit)} className="auth-form">
           <div className="input-group" style={{ marginBottom: 0 }}>
             <label htmlFor={`${formId}-email`} className="input-label">
               Email
@@ -53,13 +52,19 @@ export default function LoginPage() {
             <input
               id={`${formId}-email`}
               type="email"
-              value={email}
-              onChange={(e) => { setEmail(e.target.value); setError(''); }}
-              required
+              {...register('email', { 
+                required: 'Email is required',
+                pattern: {
+                  value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                  message: 'Enter a valid email address'
+                }
+              })}
               autoComplete="email"
-              className="input-field"
+              className={`input-field ${errors.email ? 'input-error' : ''}`}
               placeholder="you@example.com"
+              onChange={() => setApiError('')}
             />
+            {errors.email && <span style={{ color: 'var(--danger-color)', fontSize: '0.75rem', marginTop: '0.25rem' }}>{errors.email.message}</span>}
           </div>
 
           <div className="input-group" style={{ marginBottom: 0 }}>
@@ -70,12 +75,11 @@ export default function LoginPage() {
               <input
                 id={`${formId}-password`}
                 type={showPassword ? 'text' : 'password'}
-                value={password}
-                onChange={(e) => { setPassword(e.target.value); setError(''); }}
-                required
+                {...register('password', { required: 'Password is required' })}
                 autoComplete="current-password"
-                className="input-field password-field"
+                className={`input-field password-field ${errors.password ? 'input-error' : ''}`}
                 placeholder="••••••••"
+                onChange={() => setApiError('')}
               />
               <button
                 type="button"
@@ -87,6 +91,7 @@ export default function LoginPage() {
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
             </div>
+            {errors.password && <span style={{ color: 'var(--danger-color)', fontSize: '0.75rem', marginTop: '0.25rem' }}>{errors.password.message}</span>}
           </div>
 
           <button

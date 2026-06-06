@@ -11,6 +11,7 @@ const DashboardPage = React.lazy(() => import('./pages/DashboardPage'));
 const ExpensesPage = React.lazy(() => import('./pages/ExpensesPage'));
 const LoginPage = React.lazy(() => import('./pages/LoginPage'));
 const RegisterPage = React.lazy(() => import('./pages/RegisterPage'));
+const LandingPage = React.lazy(() => import('./pages/LandingPage'));
 
 const Loader = () => (
   <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', color: 'var(--text-secondary)' }}>
@@ -25,6 +26,7 @@ export default function App() {
         <ToastProvider>
           <Suspense fallback={<Loader />}>
             <Routes>
+              <Route path="/" element={<LandingPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
               <Route element={<ProtectedRoute />}>
@@ -33,7 +35,7 @@ export default function App() {
                   <Route path="/expenses" element={<ExpensesPage />} />
                 </Route>
               </Route>
-              <Route path="*" element={<Navigate to="/dashboard" replace />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </Suspense>
           <ToastContainer />

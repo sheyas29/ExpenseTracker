@@ -13,16 +13,14 @@ import expenseRoutes from './routes/expenses.js';
 
 const app = express();
 
-// Trust Vercel's reverse proxy for express-rate-limit
 app.set('trust proxy', 1);
 
-// Security Middleware
 app.use(helmet());
 app.use(mongoSanitize());
 
 const apiLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per windowMs
+  windowMs: 15 * 60 * 1000,
+  max: 100,
   message: 'Too many requests from this IP, please try again later.',
 });
 app.use('/api/', apiLimiter);
@@ -31,7 +29,6 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 
-// Connect DB before processing any requests (Serverless requirement)
 app.use(async (req, res, next) => {
   try {
     await connectDB();

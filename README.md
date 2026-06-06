@@ -30,6 +30,26 @@ This project was engineered from the ground up with a singular focus on **absolu
 
 ---
 
+## 🛡️ Robust Validation & Data Integrity
+
+A core component of the application's architecture is a strict, two-tier validation system ensuring data integrity and security from the UI down to the database.
+
+### 1. Frontend (Real-time Feedback)
+We implemented **react-hook-form** across all user inputs (Login, Registration, and Expense Creation) running in `mode: 'onChange'`.
+- **As-you-type Validation**: Users receive instant, localized error messages beneath input fields.
+- **Constraints**: Validates email formats via strict Regex patterns, enforces minimum password lengths, and ensures required financial data (amounts, categories, dates) is present before the submit button even becomes active.
+- **UX Benefit**: Prevents unnecessary API calls and provides an incredibly snappy, responsive feel.
+
+### 2. Backend (Server-Side Enforcement)
+Never trust the client. The backend acts as the ultimate source of truth.
+- **Mongoose Schema Validation**: The database layer strictly enforces types, required fields, and acceptable Enums (e.g., rejecting an expense if the category isn't strictly 'FOOD', 'TRANSPORT', etc.).
+- **Security Middleware**: 
+  - `express-mongo-sanitize` strips out malicious characters to prevent NoSQL injection attacks.
+  - `express-rate-limit` actively blocks brute-force login attempts by restricting requests per IP address.
+  - `helmet` secures HTTP headers against cross-site scripting (XSS) and clickjacking.
+
+---
+
 ## 🧠 Tech Stack: The "Why" behind the "What"
 
 Every piece of technology in this stack had to earn its place. If a lighter, faster, or more natively-controlled alternative existed, we took it.
