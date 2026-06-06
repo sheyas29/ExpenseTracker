@@ -46,10 +46,3 @@ yarn-error.log*
 .Trashes
 ehthumbs.db
 Thumbs.db
-
-# AI Agents & Assistants Data
-.claude/
-.gemini/
-.impeccable/
-
-PRODUCT.md
