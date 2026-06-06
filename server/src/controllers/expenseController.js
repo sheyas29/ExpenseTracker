@@ -13,7 +13,7 @@ export const getExpenses = async (req, res, next) => {
     const query = { user: req.user._id };
 
     if (search) {
-      query.title = { $regex: search, $options: 'i' };
+      query.$text = { $search: search };
     }
     if (category) {
       query.category = category;
@@ -117,10 +117,23 @@ export const deleteExpense = async (req, res, next) => {
 export const getStats = async (req, res, next) => {
   try {
     const userId = req.user._id;
-    const now = new Date();
-    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const { month } = req.query;
 
-    // Run aggregations in parallel
+    let targetYear, targetMonth;
+    if (month && month.match(/^\d{4}-\d{2}$/)) {
+      const [y, m] = month.split('-');
+      targetYear = parseInt(y, 10);
+      targetMonth = parseInt(m, 10) - 1; // 0-indexed
+    } else {
+      const now = new Date();
+      targetYear = now.getFullYear();
+      targetMonth = now.getMonth();
+    }
+
+    const startOfMonth = new Date(targetYear, targetMonth, 1);
+    const endOfMonth = new Date(targetYear, targetMonth + 1, 1);
+    const fiveMonthsAgo = new Date(targetYear, targetMonth - 5, 1);
+
     const [totalResult, monthResult, count, recentExpenses, monthlyData] =
       await Promise.all([
         Expense.aggregate([
@@ -128,7 +141,7 @@ export const getStats = async (req, res, next) => {
           { $group: { _id: null, total: { $sum: '$amount' } } },
         ]),
         Expense.aggregate([
-          { $match: { user: userId, date: { $gte: startOfMonth } } },
+          { $match: { user: userId, date: { $gte: startOfMonth, $lt: endOfMonth } } },
           { $group: { _id: null, total: { $sum: '$amount' } } },
         ]),
         Expense.countDocuments({ user: userId }),
@@ -138,7 +151,8 @@ export const getStats = async (req, res, next) => {
             $match: {
               user: userId,
               date: {
-                $gte: new Date(now.getFullYear(), now.getMonth() - 5, 1),
+                $gte: fiveMonthsAgo,
+                $lt: endOfMonth,
               },
             },
           },

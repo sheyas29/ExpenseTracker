@@ -1,9 +1,9 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Wallet, Calendar, FileText } from 'lucide-react';
 import MonthlyChart from '../components/MonthlyChart';
 import StatCard from '../components/StatCard';
-import useExpenses from '../hooks/useExpenses';
+import api from '../services/api';
 import '../styles/dashboard.css';
 
 export default function DashboardPage() {
@@ -13,32 +13,23 @@ export default function DashboardPage() {
   });
   const navigate = useNavigate();
 
-  const { expenses, loading } = useExpenses({ limit: 1000 });
+  const [stats, setStats] = useState({ total: 0, monthTotal: 0, recentExpenses: [], monthlyData: [] });
+  const [loading, setLoading] = useState(true);
 
-  const { total, monthly, recent } = useMemo(() => {
-    if (!expenses) return { total: 0, monthly: 0, recent: [] };
-
-    const [yearStr, monthStr] = selectedMonth.split('-');
-    const currentMonth = parseInt(monthStr, 10) - 1;
-    const currentYear = parseInt(yearStr, 10);
-
-    const stats = expenses.reduce(
-      (acc, curr) => {
-        acc.total += curr.amount;
-        const expDate = new Date(curr.date);
-        if (
-          expDate.getMonth() === currentMonth &&
-          expDate.getFullYear() === currentYear
-        ) {
-          acc.monthly += curr.amount;
-        }
-        return acc;
-      },
-      { total: 0, monthly: 0 }
-    );
-
-    return { ...stats, recent: expenses.slice(0, 5) };
-  }, [expenses, selectedMonth]);
+  useEffect(() => {
+    const fetchStats = async () => {
+      setLoading(true);
+      try {
+        const res = await api.get(`/api/expenses/stats?month=${selectedMonth}`);
+        setStats(res.data);
+      } catch (err) {
+        console.error('Failed to fetch stats', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchStats();
+  }, [selectedMonth]);
 
   if (loading) {
     return (
@@ -63,18 +54,18 @@ export default function DashboardPage() {
       </div>
 
       <div className="stats-grid">
-        <StatCard title="Total Expenses" value={total} icon={<Wallet size={20} color="var(--accent-color)" />} />
-        <StatCard title="Monthly Spending" value={monthly} icon={<Calendar size={20} color="var(--accent-color)" />} />
+        <StatCard title="Total Expenses" value={stats.total} icon={<Wallet size={20} color="var(--accent-color)" />} />
+        <StatCard title="Monthly Spending" value={stats.monthTotal} icon={<Calendar size={20} color="var(--accent-color)" />} />
       </div>
 
       <div className="card chart-section">
         <h2 className="section-title">Spending Analytics</h2>
-        <MonthlyChart data={expenses} />
+        <MonthlyChart data={stats.monthlyData} />
       </div>
 
       <div className="card">
         <h2 className="section-title">Recent Transactions</h2>
-        {recent.length === 0 ? (
+        {stats.recentExpenses.length === 0 ? (
           <div className="empty-state">
             <FileText size={40} color="var(--text-secondary)" style={{ opacity: 0.5 }} />
             <p style={{ margin: 0 }}>No recent transactions.</p>
@@ -84,7 +75,7 @@ export default function DashboardPage() {
           </div>
         ) : (
           <div className="transactions-list">
-            {recent.map((exp) => (
+            {stats.recentExpenses.map((exp) => (
               <div key={exp._id} className="transaction-item">
                 <div className="transaction-info">
                   <div className="transaction-details">

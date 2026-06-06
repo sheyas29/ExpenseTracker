@@ -14,6 +14,7 @@ export default function AppLayout() {
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (
+        e.target.isContentEditable ||
         e.target.tagName === 'INPUT' ||
         e.target.tagName === 'TEXTAREA' ||
         e.target.tagName === 'SELECT'

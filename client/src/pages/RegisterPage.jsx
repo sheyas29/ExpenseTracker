@@ -52,11 +52,19 @@ export default function RegisterPage() {
             <input
               id={`${formId}-name`}
               type="text"
-              {...register('name', { required: 'Name is required' })}
               autoComplete="name"
               className={`input-field ${errors.name ? 'input-error' : ''}`}
               placeholder="John Doe"
-              onChange={() => setApiError('')}
+              {...(() => {
+                const { onChange, ...rest } = register('name', { required: 'Name is required' });
+                return {
+                  ...rest,
+                  onChange: (e) => {
+                    setApiError('');
+                    onChange(e);
+                  }
+                };
+              })()}
             />
             {errors.name && <span style={{ color: 'var(--danger-color)', fontSize: '0.75rem', marginTop: '0.25rem' }}>{errors.name.message}</span>}
           </div>
@@ -68,17 +76,25 @@ export default function RegisterPage() {
             <input
               id={`${formId}-email`}
               type="email"
-              {...register('email', { 
-                required: 'Email is required',
-                pattern: {
-                  value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                  message: 'Enter a valid email address'
-                }
-              })}
               autoComplete="email"
               className={`input-field ${errors.email ? 'input-error' : ''}`}
               placeholder="you@example.com"
-              onChange={() => setApiError('')}
+              {...(() => {
+                const { onChange, ...rest } = register('email', { 
+                  required: 'Email is required',
+                  pattern: {
+                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                    message: 'Enter a valid email address'
+                  }
+                });
+                return {
+                  ...rest,
+                  onChange: (e) => {
+                    setApiError('');
+                    onChange(e);
+                  }
+                };
+              })()}
             />
             {errors.email && <span style={{ color: 'var(--danger-color)', fontSize: '0.75rem', marginTop: '0.25rem' }}>{errors.email.message}</span>}
           </div>
@@ -91,17 +107,25 @@ export default function RegisterPage() {
               <input
                 id={`${formId}-password`}
                 type={showPassword ? 'text' : 'password'}
-                {...register('password', { 
-                  required: 'Password is required',
-                  minLength: {
-                    value: 6,
-                    message: 'Password must be at least 6 characters'
-                  }
-                })}
                 autoComplete="new-password"
                 className={`input-field password-field ${errors.password ? 'input-error' : ''}`}
                 placeholder="••••••••"
-                onChange={() => setApiError('')}
+                {...(() => {
+                  const { onChange, ...rest } = register('password', { 
+                    required: 'Password is required',
+                    minLength: {
+                      value: 6,
+                      message: 'Password must be at least 6 characters'
+                    }
+                  });
+                  return {
+                    ...rest,
+                    onChange: (e) => {
+                      setApiError('');
+                      onChange(e);
+                    }
+                  };
+                })()}
               />
               <button
                 type="button"

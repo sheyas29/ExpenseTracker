@@ -7,7 +7,7 @@ export default function ProtectedRoute() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-slate-500 text-lg">Loading...</div>
+        <div className="text-secondary text-lg">Loading...</div>
       </div>
     );
   }

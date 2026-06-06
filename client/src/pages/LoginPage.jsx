@@ -32,8 +32,8 @@ export default function LoginPage() {
   };
 
   const handleDemoLogin = () => {
-    setValue('email', 'demo@example.com');
-    setValue('password', 'password123');
+    setValue('email', 'demo@example.com', { shouldValidate: true });
+    setValue('password', 'password123', { shouldValidate: true });
     // We don't auto-submit just in case the reviewer wants to see the filled values,
     // but they can just click Sign In.
   };
@@ -59,17 +59,25 @@ export default function LoginPage() {
             <input
               id={`${formId}-email`}
               type="email"
-              {...register('email', { 
-                required: 'Email is required',
-                pattern: {
-                  value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                  message: 'Enter a valid email address'
-                }
-              })}
               autoComplete="email"
               className={`input-field ${errors.email ? 'input-error' : ''}`}
               placeholder="you@example.com"
-              onChange={() => setApiError('')}
+              {...(() => {
+                const { onChange, ...rest } = register('email', { 
+                  required: 'Email is required',
+                  pattern: {
+                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                    message: 'Enter a valid email address'
+                  }
+                });
+                return {
+                  ...rest,
+                  onChange: (e) => {
+                    setApiError('');
+                    onChange(e);
+                  }
+                };
+              })()}
             />
             {errors.email && <span style={{ color: 'var(--danger-color)', fontSize: '0.75rem', marginTop: '0.25rem' }}>{errors.email.message}</span>}
           </div>
@@ -82,11 +90,19 @@ export default function LoginPage() {
               <input
                 id={`${formId}-password`}
                 type={showPassword ? 'text' : 'password'}
-                {...register('password', { required: 'Password is required' })}
                 autoComplete="current-password"
                 className={`input-field password-field ${errors.password ? 'input-error' : ''}`}
                 placeholder="••••••••"
-                onChange={() => setApiError('')}
+                {...(() => {
+                  const { onChange, ...rest } = register('password', { required: 'Password is required' });
+                  return {
+                    ...rest,
+                    onChange: (e) => {
+                      setApiError('');
+                      onChange(e);
+                    }
+                  };
+                })()}
               />
               <button
                 type="button"

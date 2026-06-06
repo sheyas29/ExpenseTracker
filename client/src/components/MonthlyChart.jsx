@@ -24,20 +24,10 @@ export default function MonthlyChart({ data = [] }) {
 
   const monthlyData = useMemo(() => {
     if (!data.length) return [];
-    const grouped = {};
-    data.forEach((exp) => {
-      const date = new Date(exp.date);
-      const monthKey = `${date.getFullYear()}-${date.getMonth()}`;
-      if (!grouped[monthKey]) {
-        grouped[monthKey] = {
-          name: monthNames[date.getMonth()],
-          total: 0,
-          timestamp: date.getTime(),
-        };
-      }
-      grouped[monthKey].total += exp.amount;
-    });
-    return Object.values(grouped).sort((a, b) => a.timestamp - b.timestamp);
+    return data.map(d => ({
+      name: monthNames[d.month - 1], // MongoDB $month is 1-indexed
+      total: d.total,
+    }));
   }, [data]);
 
   if (!data.length) {
