@@ -226,6 +226,33 @@ Here is a simple walkthrough of what every file does in plain terms:
 
 ---
 
+## 🔌 REST API Documentation
+
+The backend of this project exposes a clean, standardized RESTful API. All endpoints are protected by JWT authentication (excluding registration and login).
+
+### Authentication Endpoints (`/api/auth`)
+
+| Method   | Endpoint             | Auth | Description                   | Request Body                                           | Response Example (200 OK / 201 Created)                                      |
+| :------- | :------------------- | :--: | :---------------------------- | :----------------------------------------------------- | :--------------------------------------------------------------------------- |
+| **POST** | `/api/auth/register` |  ❌  | Create a new user account     | `{ "name": "...", "email": "...", "password": "..." }` | `{ "token": "...", "user": { "id": "...", "name": "...", "email": "..." } }` |
+| **POST** | `/api/auth/login`    |  ❌  | Verify credentials and log in | `{ "email": "...", "password": "..." }`                | `{ "token": "...", "user": { "id": "...", "name": "...", "email": "..." } }` |
+| **GET**  | `/api/auth/me`       |  🔑  | Retrieve active user profile  | _None_                                                 | `{ "id": "...", "name": "...", "email": "..." }`                             |
+
+### Expense Management Endpoints (`/api/expenses`)
+
+_Note: All endpoints below require a `Authorization: Bearer <JWT_TOKEN>` header._
+
+| Method     | Endpoint              | Description                                          | Query Parameters                                                                                                      | Request Body                                                                                     | Response Example (200 OK)                                                                                                                       |
+| :--------- | :-------------------- | :--------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------- |
+| **GET**    | `/api/expenses`       | Fetch paginated, search-filtered transaction lists   | `page` (default: 1)<br>`limit` (default: 10)<br>`search` (optional search filter)<br>`category` (optional tag filter) | _None_                                                                                           | `{ "expenses": [...], "pagination": { "page": 1, "limit": 10, "total": 25, "pages": 3 } }`                                                      |
+| **GET**    | `/api/expenses/stats` | Fetch summary math and 6-month historical chart data | `month` (optional, format: `YYYY-MM`)                                                                                 | _None_                                                                                           | `{ "total": 23000, "monthTotal": 4500, "count": 25, "recentExpenses": [...], "monthlyData": [{"month": 6, "year": 2026, "total": 4500}, ...] }` |
+| **POST**   | `/api/expenses`       | Add a new expense transaction                        | _None_                                                                                                                | `{ "title": "...", "amount": 120.50, "category": "food", "date": "YYYY-MM-DD", "notes": "..." }` | `{ "_id": "...", "title": "...", "amount": 120.50, "category": "food", "date": "...", "notes": "..." }`                                         |
+| **GET**    | `/api/expenses/:id`   | Get details of a single expense by database ID       | _None_                                                                                                                | _None_                                                                                           | `{ "_id": "...", "title": "...", "amount": 120.50, "category": "food", ... }`                                                                   |
+| **PUT**    | `/api/expenses/:id`   | Update an existing transaction record by ID          | _None_                                                                                                                | `{ "title": "...", "amount": 120.50, ... }`                                                      | `{ "_id": "...", "title": "...", "amount": 120.50, ... }`                                                                                       |
+| **DELETE** | `/api/expenses/:id`   | Permanently delete a transaction by ID               | _None_                                                                                                                | _None_                                                                                           | `{ "message": "Expense deleted" }`                                                                                                              |
+
+---
+
 ## Getting Started (Local Development)
 
 ### 1. Database (MongoDB Atlas)
