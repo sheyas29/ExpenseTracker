@@ -23,6 +23,7 @@ export default function ExpenseForm({
     handleSubmit,
     formState: { errors },
   } = useForm({
+    mode: 'onChange',
     defaultValues: {
       title: defaultValues?.title || '',
       amount: defaultValues?.amount || '',
@@ -49,7 +50,7 @@ export default function ExpenseForm({
         <input
           id={`${formId}-title`}
           {...register('title', { required: 'Title is required' })}
-          className="input-field"
+          className={`input-field ${errors.title ? 'input-error' : ''}`}
           placeholder="e.g. Grocery shopping"
           autoFocus
         />
@@ -73,7 +74,7 @@ export default function ExpenseForm({
             valueAsNumber: true,
             min: { value: 0.01, message: 'Must be greater than 0' },
           })}
-          className="input-field"
+          className={`input-field ${errors.amount ? 'input-error' : ''}`}
           placeholder="0.00"
         />
         {errors.amount && (
@@ -90,7 +91,7 @@ export default function ExpenseForm({
         <select
           id={`${formId}-category`}
           {...register('category', { required: 'Category is required' })}
-          className="input-field"
+          className={`input-field ${errors.category ? 'input-error' : ''}`}
         >
           <option value="">Select category</option>
           {categories.map((cat) => (
@@ -114,7 +115,7 @@ export default function ExpenseForm({
           id={`${formId}-date`}
           type="date"
           {...register('date', { required: 'Date is required' })}
-          className="input-field"
+          className={`input-field ${errors.date ? 'input-error' : ''}`}
         />
         {errors.date && (
           <p style={{ color: 'var(--danger-color)', fontSize: '0.75rem' }}>
