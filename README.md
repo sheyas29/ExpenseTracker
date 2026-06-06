@@ -18,7 +18,7 @@ ExpenseTracker is a comprehensive, full-stack designed to give you complete visi
 
 ---
 
-## Uncompromising Performance Metrics
+## Performance Metrics
 
 This project was engineered from the ground up with a singular focus on **absolute speed and microscopic bundle sizes**. Stripped away every unnecessary dependency to create an application that is shockingly lightweight.
 
@@ -36,7 +36,7 @@ A core component of the application's architecture is a strict, two-tier validat
 
 ### 1. Frontend (Real-time Feedback)
 
-We implemented **react-hook-form** across all user inputs (Login, Registration, and Expense Creation) running in `mode: 'onChange'`.
+Implemented **react-hook-form** across all user inputs (Login, Registration, and Expense Creation) running in `mode: 'onChange'`.
 
 - **As-you-type Validation**: Users receive instant, localized error messages beneath input fields.
 - **Constraints**: Validates email formats via strict Regex patterns, enforces minimum password lengths, and ensures required financial data (amounts, categories, dates) is present before the submit button even becomes active.
@@ -56,7 +56,7 @@ Never trust the client. The backend acts as the ultimate source of truth.
 
 ## Tech Stack: The "Why" behind the "What"
 
-Every piece of technology in this stack had to earn its place. If a lighter, faster, or more natively-controlled alternative existed, we took it.
+Every piece of technology in this stack had to earn its place. If a lighter, faster, or more natively-controlled alternative existed, took it.
 
 ### Frontend
 
@@ -65,7 +65,7 @@ Every piece of technology in this stack had to earn its place. If a lighter, fas
 - **Pure Vanilla CSS Variables**
   - _Why not Tailwind CSS or Material UI?_ Component libraries like MUI ship with massive javascript bundles and enforce rigid design systems. Tailwind, while excellent, pollutes the DOM with class soup. By using pure CSS Custom Properties (Tokens), we maintain absolute pixel-perfect control over our design, ensure instant theming (Dark/Light mode), and keep the CSS bundle phenomenally small.
 - **Lucide-React**
-  - _Why not FontAwesome or Emojis?_ We explicitly removed all emojis because they render inconsistently across operating systems and look unprofessional. FontAwesome is heavy. Lucide provides incredibly crisp, lightweight SVG paths that inherit CSS `color` instantly.
+  - _Why not FontAwesome or Emojis?_ They render inconsistently across operating systems and look unprofessional. FontAwesome is heavy. Lucide provides incredibly crisp, lightweight SVG paths that inherit CSS `color` instantly.
 - **Recharts**
   - _Why not Chart.js?_ Chart.js uses Canvas rendering. Recharts uses declarative React components rendering SVG, allowing us to perfectly bind our CSS design tokens (`var(--accent-color)`) directly to the charts.
 
