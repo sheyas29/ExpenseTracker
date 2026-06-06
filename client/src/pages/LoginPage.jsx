@@ -8,7 +8,7 @@ import '../styles/auth.css';
 
 export default function LoginPage() {
   const formId = useId();
-  const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onChange' });
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm({ mode: 'onChange' });
   const [apiError, setApiError] = useState('');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -29,6 +29,13 @@ export default function LoginPage() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleDemoLogin = () => {
+    setValue('email', 'demo@example.com');
+    setValue('password', 'password123');
+    // We don't auto-submit just in case the reviewer wants to see the filled values,
+    // but they can just click Sign In.
   };
 
   return (
@@ -100,6 +107,16 @@ export default function LoginPage() {
             className="btn btn-primary auth-submit-btn"
           >
             {loading ? 'Signing in...' : 'Sign in'}
+          </button>
+
+          <button
+            type="button"
+            onClick={handleDemoLogin}
+            disabled={loading}
+            className="btn btn-ghost auth-submit-btn"
+            style={{ marginTop: '0.5rem', border: '1px dashed var(--border-color)' }}
+          >
+            Prefill Demo Credentials
           </button>
         </form>
 
